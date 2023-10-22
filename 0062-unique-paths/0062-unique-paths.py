@@ -5,12 +5,12 @@ class Solution:
                 return 0
             if (rows == cols == 1):
                 return 1
-            if dp[rows][cols]:
-                return dp[rows][cols]
+            if dp[rows - 1][cols - 1]:
+                return dp[rows - 1][cols - 1]
             result = count_unique_paths(rows - 1, cols, dp) + count_unique_paths(rows, cols - 1, dp)
-            dp[rows][cols] = result
+            dp[rows - 1][cols - 1] = result
             return result
         
-        dp = [[0] * (n + 1) for _ in range (m + 1)]
-        dp[1][1] = 1
+        dp = [[0] * n for _ in range(m)]
+        dp[0][0] = 1
         return count_unique_paths(m, n, dp)
