@@ -17,9 +17,9 @@ class Solution:
             val, _, top = heapq.heappop(heap)
             curr.next = top
             curr = curr.next
-            top = top.next
-            if top:
-                heapq.heappush(heap, (top.val, id(top), top))
+            node = top.next
+            if node:
+                heapq.heappush(heap, (node.val, id(node), node))
         
         return dummy.next
 
