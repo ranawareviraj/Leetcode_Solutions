@@ -2,11 +2,14 @@ class Solution:
     def fib(self, n: int) -> int:
         if n <= 1:
             return n
-        
-        prev_two = 0
-        prev_one = 1 
-        
-        for i in range(2, (n + 1)):
-            prev_two, prev_one = prev_one, (prev_one + prev_two)
 
-        return prev_one
+        dp = [0] * (n + 1)
+        dp[1] = 1
+
+        for i in range(n + 1):
+            if (i + 1) <= (n):
+               dp[i + 1] += dp[i] 
+            if (i + 2) <= (n):
+                dp[i + 2] += dp[i]
+        
+        return dp[n]
