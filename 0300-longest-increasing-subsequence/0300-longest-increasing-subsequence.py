@@ -5,7 +5,8 @@ class Solution:
             if i in memo:
                 return memo[i]
 
-            # Base case
+            # Base case: When i = 0, below for loop wont be excuted 
+            # As it excutes for j if j is less than i that is if its less than 0
             ans = 1
 
             # ecursively find 
