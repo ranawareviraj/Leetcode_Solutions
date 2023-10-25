@@ -1,19 +1,12 @@
 class Solution:
     def coinChange(self, coins: List[int], amount: int) -> int:
-        dp = [ None ] * (amount + 1)
-        dp[0] = [[]] # [[], None, None, None]
-        # [1,2,5]
+        dp = [ math.inf ] * (amount + 1)
+        dp[0] = 0 
 
         for i in range(amount + 1):
-            if dp[i] != None:
-                for coin in coins:
-                    new_combination = dp[i][:]
-                    new_combination.append(coin)
-                    if (i + coin) <= amount:
-                        if dp[i + coin] == None:
-                            dp[i + coin] = new_combination
-                        elif len(new_combination) < len(dp[i + coin]):
-                            dp[i + coin] = new_combination
+            for coin in coins:
+                coint_count = dp[i] + 1
+                if (i + coin) <= amount:
+                    dp[i + coin] = min(coint_count, dp[i + coin])
         
-        return len(dp[amount]) - 1 if dp[amount] != None else (-1)
-
+        return int(dp[amount]) if dp[amount] != math.inf else (-1)
