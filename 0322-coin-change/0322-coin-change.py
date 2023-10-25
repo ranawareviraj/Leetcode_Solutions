@@ -9,4 +9,4 @@ class Solution:
                 if (i + coin) <= amount:
                     dp[i + coin] = min(coint_count, dp[i + coin])
         
-        return int(dp[amount]) if dp[amount] != math.inf else (-1)
+        return dp[amount] if (dp[amount] != math.inf) else (-1)
