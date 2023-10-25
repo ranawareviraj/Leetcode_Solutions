@@ -1,20 +1,19 @@
 class Solution:
     def rob(self, nums: List[int]) -> int:
-        def dp(nums, i, memo):
-            # If the value cached, return it
-            if i in memo:
-                return memo[i]
+        n = len(nums)
 
-            # Base Cases: No of houses are 1 or 2 (i = 0, or i = 1)
-            if i == 0:
-                return nums[0]
-            if i == 1:
-                return max(nums[0], nums[1])
-            
-            # Find max value based on money we collect,
-            # if we rob the current house or not house
-            memo[i] = max(dp(nums, i - 2, memo) + nums[i], dp(nums, i - 1, memo))
-            return memo[i]
+        if n == 1:
+            return nums[0]
         
-        memo = {}
-        return dp(nums, len(nums) - 1, memo)
+        prev_two = nums[0]
+        prev_one = max(nums[0], nums[1])
+        result = prev_one
+
+        for house in range(2, n):
+            result = max(prev_two + nums[house], prev_one)
+            prev_two = prev_one
+            prev_one = result
+        
+        return result
+        
+        return prev_one
