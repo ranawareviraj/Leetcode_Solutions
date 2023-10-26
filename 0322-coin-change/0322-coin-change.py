@@ -1,22 +1,28 @@
   
 class Solution:
     def coinChange(self, coins: List[int], amount: int) -> int:
-        @cache
-        def dp(target):
+        
+        def dp(target, memo):
+            if target in memo:
+                return memo[target]
             if target < 0:
                 return -1
             if target == 0:
                 return 0
             
-            count = math.inf
+            count = -1
             for coin in coins:
-                new_count = dp(target - coin)
+                new_count = dp(target - coin, memo)
                 if new_count != -1:
-                    count = min(count, new_count + 1)
-
-            return -1 if (count == math.inf) else count
-
-        return dp(amount)
+                    new_count += 1
+                    if count == -1 or new_count < count:
+                        count = new_count   
+                                 
+            memo[target] = count
+            return count
+        
+        memo = {}
+        return dp(amount, memo)
 
 
 '''
