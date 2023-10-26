@@ -10,16 +10,14 @@ class Solution:
             if target == 0:
                 return 0
             
-            count = -1
+            count = math.inf
             for coin in coins:
                 new_count = dp(target - coin, memo)
                 if new_count != -1:
-                    new_count += 1
-                    if count == -1 or new_count < count:
-                        count = new_count   
-                                 
-            memo[target] = count
-            return count
+                    count = min(count, new_count + 1)
+            
+            memo[target] = count        
+            return -1 if (count == math.inf) else count
         
         memo = {}
         return dp(amount, memo)
