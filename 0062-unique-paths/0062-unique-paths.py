@@ -1,20 +1,14 @@
-from collections import defaultdict
-
 class Solution:
     def uniquePaths(self, m: int, n: int) -> int:
-        def count_unique_paths(rows, cols, dp):
-            if (rows == 0) or (cols == 0):
-                return 0
-            if (rows == cols == 1):
-                return 1
-            key = "".join([str(rows), "-", str(cols)])
-            if dp[key]:
-                return dp[key]
+        # Base condition: Fill first column and first row of dp with 1
+        dp = [[0] * n for i in range(m)]
+        dp[0][0] = 1
 
-            result = count_unique_paths(rows - 1, cols, dp) + count_unique_paths(rows, cols - 1, dp)
-            dp[key] = result
-            return result
-        
-        dp = defaultdict(str)
-        dp[("1-1")] = 1
-        return count_unique_paths(m, n, dp)
+        for row in range(m):
+            for col in range(n):
+                if (row + 1 < m):
+                    dp[row + 1][col] += dp[row][col]
+                if (col + 1 < n):
+                    dp[row][col + 1] += dp[row][col]
+                
+        return dp[m - 1][n - 1]
