@@ -12,7 +12,9 @@ class Solution:
                 return dp[key]
 
             result = count_unique_paths(rows - 1, cols, dp) + count_unique_paths(rows, cols - 1, dp)
+            key2 = str(cols) + "-" + str(rows)
             dp[key] = result
+            dp[key2] = result
             return result
         
         dp = defaultdict(str)
