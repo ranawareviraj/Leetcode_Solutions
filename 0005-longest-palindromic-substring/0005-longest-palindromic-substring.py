@@ -9,16 +9,11 @@ class Solution:
             return longest_palindrome
 
         n = len(s)
-        longest_palindrome = ""
+        ans = ""
+
         for i in range(n):
-            # Find all odd length palindromes centered at i th character
-            # left =  right = i
-            longest_palindrome = find_longest_palindrome(s, i, i, longest_palindrome)
-
-            # Find all even length palindromes centered at i th and (i + 1) th characteres
-            # left = i, right = i + 1
-            longest_palindrome = find_longest_palindrome(s, i, i + 1, longest_palindrome)
+            ans = find_longest_palindrome(s, i, i, ans)
+            ans = find_longest_palindrome(s, i, i + 1, ans)
         
-        return longest_palindrome
+        return ans
 
-# https://www.youtube.com/watch?v=XYQecbcd6_c&ab_channel=NeetCode
