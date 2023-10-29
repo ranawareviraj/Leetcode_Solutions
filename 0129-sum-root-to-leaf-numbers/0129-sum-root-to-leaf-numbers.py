@@ -6,18 +6,19 @@
 #         self.right = right
 class Solution:
     def sumNumbers(self, root: Optional[TreeNode]) -> int:
-        result = 0
-
-        def find_all_path_sum(node, path):
+        def find_all_path_sum(node, curr_number):
             nonlocal result
             if not node:
                 return
             
+            curr_number = curr_number * 10 + node.val
             if not (node.left or node.right):
-                result += int("".join(path[:] + [str(node.val)]))
-
-            find_all_path_sum(node.left, path[:] + [str(node.val)])
-            find_all_path_sum(node.right, path[:] + [str(node.val)])
-        
-        find_all_path_sum(root, [])
+                result += curr_number
+            
+            find_all_path_sum(node.left, curr_number)
+            find_all_path_sum(node.right, curr_number)
+            
+        result = 0
+        find_all_path_sum(root, 0)
         return result
+        
