@@ -6,13 +6,20 @@
 #         self.right = right
 class Solution:
     def isSameTree(self, p: Optional[TreeNode], q: Optional[TreeNode]) -> bool:
-        if p == q == None:
+        # If both trees are Null, they are same tree
+        if not p and not q:
             return True
         
-        if (p and not q) or (q and not p) or p.val != q.val:
+        # Else if either of the tree is Null, they are not same tree
+        if not p or not q:
             return False
         
-        is_left_same = self.isSameTree(p.left, q.left)
-        is_right_same = self.isSameTree(p.right, q.right)
+        # Else values of respective nodes aren't same, they are not same tree
+        if p.val != q.val:
+            return False
+        
+        # For trees to be same, the left and right subtrees must be same
+        is_same_tree_left = self.isSameTree(p.left, q.left)
+        is_same_tree_right = self.isSameTree(p.right, q.right)
 
-        return (is_left_same and is_right_same)
+        return is_same_tree_left and is_same_tree_right
