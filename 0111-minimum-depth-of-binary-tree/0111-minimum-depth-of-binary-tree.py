@@ -8,18 +8,20 @@ class Solution:
     def minDepth(self, root: Optional[TreeNode]) -> int:
         if not root:
             return 0
-            
-        queue = deque()
-        queue.append((root, 1))
-        while queue:
-            node, level = queue.popleft()
+        
+        stack = [(root, 1)]
+        min_depth = math.inf
 
-            if node.left == None and node.right == None:
-                return level
+        while stack:
+            node, depth = stack.pop()
+
+            if not (node.left or node.right):
+                min_depth = min(min_depth, depth)
             
             if node.left:
-                queue.append((node.left, level + 1))
+                stack.append((node.left, depth + 1))
             if node.right:
-                queue.append((node.right, level + 1))
-            
-        return -1
+                stack.append((node.right, depth + 1))
+        
+        return min_depth
+
