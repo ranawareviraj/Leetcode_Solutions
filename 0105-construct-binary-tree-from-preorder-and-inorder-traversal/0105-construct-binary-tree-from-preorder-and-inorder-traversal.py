@@ -6,13 +6,25 @@
 #         self.right = right
 class Solution:
     def buildTree(self, preorder: List[int], inorder: List[int]) -> Optional[TreeNode]:
-        if not preorder or not inorder:
-            return None
-        
-        node = TreeNode(preorder[0])
-        pivot = inorder.index(preorder[0])
+        def build_tree(preorder, inorder, index_map):
+            if not preorder or not inorder:
+                return None
+            
+            # First node in preorder traversal is root node. 
+            # Find its index in inorder traversal list - total nodes in left subtree
+            node = TreeNode(preorder[0])
+            pivot = inorder.index(preorder[0])
 
-        node.left = self.buildTree(preorder[1 : pivot + 1], inorder[ : pivot])
-        node.right = self.buildTree(preorder[pivot + 1 : ], inorder[pivot + 1: ])
+            # Send left subtree elements to the left of current node and
+            # Send right subtree elements to the right of current node
+            node.left = build_tree(preorder[1 : pivot + 1], inorder[ : pivot], index_map)
+            node.right = build_tree(preorder[pivot + 1 : ], inorder[pivot + 1 : ], index_map)
+            
+            return node
+         
+        # Build index map for nodes in inorder traversal list for constant time lookup
+        index_map = {}
+        for node, index in enumerate(inorder):
+            index_map[node] = index
         
-        return node
+        return build_tree(preorder, inorder, index_map)
