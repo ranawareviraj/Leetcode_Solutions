@@ -1,19 +1,17 @@
 class Solution:
     def removeDuplicates(self, nums: List[int]) -> int:
-        left = 0
+        left = 1
         n = len(nums)
-        counter = 0
+        counter = 1
 
-        for right in range(n):
-            if nums[left] == nums[right]:
+        for right in range(1, n):
+            if nums[right] == nums[right - 1]:
                 counter += 1
-                if counter == 2:
-                    left += 1
-                    nums[left] = nums[right]
             else:
-                left += 1
-                nums[left] = nums[right]
                 counter = 1
 
-        return left + 1
-            
+            if counter <= 2:
+                nums[left] = nums[right]
+                left += 1
+
+        return left
