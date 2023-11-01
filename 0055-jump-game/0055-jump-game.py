@@ -1,12 +1,14 @@
 class Solution:
     def canJump(self, nums: List[int]) -> bool:
         n = len(nums)
-        max_reach = 0
+        dp = [False] * n
+        dp[n - 1] = True  # The last position is reachable.
 
-        for i in range(n):
-            if i > max_reach:
-                return False
-            
-            max_reach = max(max_reach, i + nums[i])
-        
-        return True
+        for position in range(n - 2, -1, -1):
+            max_jump = min(n - 1, position + nums[position])
+            for next_position in range(position + 1, max_jump + 1):
+                if dp[next_position]:
+                    dp[position] = True
+                    break
+
+        return dp[0]
