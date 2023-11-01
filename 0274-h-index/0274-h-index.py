@@ -8,5 +8,5 @@ class Solution:
                 h_index += 1
             else:
                 break
-        
+                
         return h_index
