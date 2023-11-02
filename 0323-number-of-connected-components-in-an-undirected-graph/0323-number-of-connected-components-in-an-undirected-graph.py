@@ -1,32 +1,31 @@
+class UnionFind:
+    def __init__(self, n):
+        self.root = list(range(n))
+        self.rank = [1] * n
+
+    # The function to find root
+    def find(self, node):
+        if self.root[node] != node:
+            return self.find(self.root[node])
+        return node
+
+    def union(self, x, y):
+        root_x, root_y = self.find(x), self.find(y)
+
+        if self.rank[root_x] > self.rank[root_y]:
+            root_x, root_y = root_y, root_x
+        
+        self.root[root_x] = root_y
+        self.rank[root_y] += self.rank[root_x]
+
 class Solution:
     def countComponents(self, n: int, edges: List[List[int]]) -> int:
-        # Build graph
-        graph = collections.defaultdict(list)
-        for x, y in edges:
-            graph[x].append(y)
-            graph[y].append(x) 
-            
-        # DFS starting from a node
-        def dfs(node):
-            # Base case : If node is already visited, its component is already explored
-            # So just return
-            if node in seen:
-                return
-            
-            # If we come to this line means the node is being visited for the first time
-            seen.add(node)
-
-            # Recursively explore all the nodes part of current component
-            for neighbor in graph[node]:
-                dfs(neighbor)
+        union_find = UnionFind(n)
+        for (x, y) in edges:
+            union_find.union(x, y)
         
-        seen = set()
-        number_of_components = 0
-
-        # Visit all nodes in a graph in DFS manner
+        roots = set()
         for node in range(n):
-            if node not in seen:
-                number_of_components += 1
-                dfs(node)
+            roots.add(union_find.find(node))
 
-        return number_of_components
+        return len(roots)
