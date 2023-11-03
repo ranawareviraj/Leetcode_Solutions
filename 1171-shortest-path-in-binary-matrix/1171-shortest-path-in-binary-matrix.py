@@ -12,27 +12,25 @@ class Solution:
         # Possible neighbors if they in bounds
         directions = [(0, 1), (1, 0), (-1, 0), (0, -1), (-1, 1), (1, -1), (-1, -1), (1, 1)]
         
-        # Initialize BFS queue and set of visited node
-        queue = deque([(0, 0)])
+        # Initialize BFS queue (row, col, level) and set of visited node
+        queue = deque([(0, 0, 1)])
         seen = { (0, 0) }
-        level = 0
 
         # BFS
         while queue:
-            level += 1
-            level_size = len(queue)
-            for _ in range(level_size):
-                row, col = queue.popleft()
+            row, col, level = queue.popleft()
 
-                if (row, col) == (m - 1, n - 1):
-                    return level
+            # If this is bottom-right cell, return level
+            if (row, col) == (m - 1, n - 1):
+                return level
 
-                for dx, dy in directions:
-                    next_row = row + dy
-                    next_col = col + dx
+            # Add neighbors of the current node
+            for dx, dy in directions:
+                next_row = row + dy
+                next_col = col + dx
 
-                    if is_valid(next_row, next_col) and (next_row, next_col) not in seen:
-                        seen.add((next_row, next_col))
-                        queue.append((next_row, next_col))
+                if is_valid(next_row, next_col) and (next_row, next_col) not in seen:
+                    seen.add((next_row, next_col))
+                    queue.append((next_row, next_col, level + 1))
             
         return -1
