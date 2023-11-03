@@ -10,10 +10,10 @@ class Solution:
             if not node:
                 return False
 
-            curr_sum += node.val
+            target_sum -= node.val
 
             if not (node.left or node.right):
-                return (curr_sum == targetSum)
+                return (target_sum == 0)
             
             path_sum_in_left = has_path_sum(node.left, curr_sum, target_sum)
             path_sum_in_right = has_path_sum(node.right,  curr_sum, target_sum)
