@@ -5,8 +5,10 @@ class Solution:
 
         directions = [(0, 1), (1, 0), (-1, 0), (0, -1)]
         m, n = len(grid), len(grid[0])
-        seen = set()
-        seen.add((0, 0, k))
+
+        seen = [[[False] * (k + 1) for _ in range(n)] for j in range(m)]
+        seen[0][0][k] = True
+
         queue = deque([(0, 0, k)])
         level = 0
         
@@ -23,8 +25,8 @@ class Solution:
                     if in_bounds(nr, nc):
                         next_obstacles = obstacles - grid[nr][nc] 
 
-                        if (nr, nc, next_obstacles) not in seen and (next_obstacles >= 0):
-                            seen.add((nr, nc, next_obstacles))
+                        if (next_obstacles >= 0) and not seen[nr][nc][next_obstacles]:
+                            seen[nr][nc][next_obstacles] = True
                             queue.append((nr, nc, next_obstacles))
 
             level += 1
