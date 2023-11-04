@@ -12,18 +12,22 @@ class Solution:
         if not node:
             return None
 
-        def dfs(old_node):
-            if old_node.val in nodes:
-                return nodes[old_node.val]
-            
-            new_node = Node(old_node.val, [])
-            nodes[old_node.val] = new_node
+        nodes = defaultdict(Node)
+        new_root = Node(node.val, [])
+        nodes[node.val] = new_root
+
+        seen = set()
+        queue = deque([ node ])
+  
+        while queue:
+            old_node = queue.popleft()
 
             for neighbor in old_node.neighbors:
-                new_neighbor = dfs(neighbor)
-                new_node.neighbors.append(new_neighbor)
-
-            return new_node
-
-        nodes = defaultdict(Node)
-        return dfs(node)
+                if neighbor.val not in nodes:
+                    new_neighbor = Node(neighbor.val, [])
+                    nodes[neighbor.val] = new_neighbor
+                    queue.append( neighbor )
+                
+                nodes[old_node.val].neighbors.append(nodes[neighbor.val])
+                
+        return nodes[node.val]
