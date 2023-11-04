@@ -17,17 +17,19 @@ class Solution:
         nodes[node.val] = new_root
 
         seen = set()
-        queue = deque([ node ])
+        stack = [ node ]
   
-        while queue:
-            old_node = queue.popleft()
+        while stack:
+            old_node = stack.pop()
 
             for neighbor in old_node.neighbors:
                 if neighbor.val not in nodes:
-                    new_neighbor = Node(neighbor.val, [])
-                    nodes[neighbor.val] = new_neighbor
-                    queue.append( neighbor )
+                    nodes[neighbor.val] = Node(neighbor.val, [])
+                    stack.append( neighbor )
                 
-                nodes[old_node.val].neighbors.append(nodes[neighbor.val])
+                current_node = nodes[old_node.val]
+                current_neighbor = nodes[neighbor.val]
+                
+                current_node.neighbors.append(current_neighbor)
                 
         return nodes[node.val]
