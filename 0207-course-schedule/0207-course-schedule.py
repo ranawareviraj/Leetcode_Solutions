@@ -17,9 +17,9 @@ class Solution:
             course = queue.popleft()
             courses_completed.add(course)
 
-            for neighbor in prerequisites_graph[course]:
-                prerequisites_count[neighbor] -= 1
-                if prerequisites_count[neighbor] == 0:
-                    queue.append(neighbor)
+            for next_course in prerequisites_graph[course]:
+                prerequisites_count[next_course] -= 1
+                if prerequisites_count[next_course] == 0:
+                    queue.append(next_course)
 
         return len(courses_completed) == numCourses
