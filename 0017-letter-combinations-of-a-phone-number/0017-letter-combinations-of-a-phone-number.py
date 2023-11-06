@@ -1,19 +1,22 @@
 class Solution:
     def letterCombinations(self, digits: str) -> List[str]:
-        def backtrack(digits_index, current_combination):
+        
+        def backtrack(index, current_combination):
             if len(current_combination) == len(digits):
                 combinations.append("".join(current_combination))
-                return
+                return 
             
-            current_digit = digits[digits_index]
-            for letter in letter_map[current_digit]:
+            current_digit = digits[index]
+            letters_of_current_digit = letter_map[current_digit]
+            
+            for letter in letters_of_current_digit:
                 current_combination.append(letter)
-                backtrack(digits_index + 1, current_combination)
+                backtrack(index + 1, current_combination)
                 current_combination.pop()
-
+            
         if len(digits) == 0:
             return []
-        
+
         letter_map = {
             '2': "abc",
             '3': "def",
@@ -28,4 +31,3 @@ class Solution:
         combinations = []
         backtrack(0, [])
         return combinations
-            
