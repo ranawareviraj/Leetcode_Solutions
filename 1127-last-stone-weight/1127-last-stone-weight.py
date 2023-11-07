@@ -1,18 +1,22 @@
 class Solution:
     def lastStoneWeight(self, stones: List[int]) -> int:
-        max_heap = []
-
-        for stone in stones:
-            heapq.heappush(max_heap, -stone)
+        heap = [-stone for stone in stones]
+        heapq.heapify(heap)
         
-        while len(max_heap) > 1:
-            heaviest = heapq.heappop(max_heap)
-            second_heaviest = heapq.heappop(max_heap)
-
-            if heaviest != second_heaviest:
-                heapq.heappush(max_heap, -abs(heaviest - second_heaviest))
+        # While there are at least 2 stones in the heap
+        # Pop heaviest two stones
+        while len(heap) > 1:
+            stone1 = -heapq.heappop(heap)
+            stone2 = -heapq.heappop(heap)
+            
+            # If weight of stones is not same
+            if stone1 != stone2:
+                # Put negative diff, indtead of s1-s2, put s2-s1 (Max heap)
+                heapq.heappush(heap, -(stone1 - stone2))
         
-        top = 0
-        if max_heap:
-            top = -max_heap[0]
-        return top
+  		# If no stones left, return 0. Else return weight of stone remaining
+        last_remaining_stone = 0
+        if len(heap) != 0:
+            last_remaining_stone = -heapq.heappop(heap)
+						
+        return last_remaining_stone
