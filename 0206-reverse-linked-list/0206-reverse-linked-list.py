@@ -5,26 +5,12 @@
 #         self.next = next
 class Solution:
     def reverseList(self, head: Optional[ListNode]) -> Optional[ListNode]:
-        if not head:
-            return None
-        if not head.next:
-            return head
-        
-        # 1 -> 
-        # head = 1
-
-        # Preserve next node of the current node
-        # next_node = 2
-        # 1 -> X
-        next_node = head.next
-        head.next = None
-
-        # Assume reverseList function returns head reversed LL starting next node
-        # 2 <- 3 <- 4
-        # new_head = 4
-        new_head = self.reverseList(next_node)
-
-        # Set the next node of the preseved node to the prev_head 
-        # X <- 1 <- 2 <- 3 <- 4
-        next_node.next = head
-        return new_head
+        prev = None
+        curr = head
+        while curr:
+            next_node = curr.next # first, make sure we don't lose the next node
+            curr.next = prev      # reverse the direction of the pointer
+            prev = curr           # set the current node to prev for the next node
+            curr = next_node      # move on
+            
+        return prev
