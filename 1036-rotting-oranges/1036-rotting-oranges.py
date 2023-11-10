@@ -28,6 +28,8 @@ class Solution:
                 for dx, dy in directions:
                     next_row, next_col = row + dy, col + dx
                     if is_valid(next_row, next_col) and (next_row, next_col) not in seen:
+                        # There might be no infected oranges in current round
+                        # Use is_infected flag to increment minutes if we add new oranges in this round 
                         is_infected = True
                         fresh_oranges -= 1
                         queue.append((next_row, next_col))
@@ -36,4 +38,4 @@ class Solution:
             if is_infected:
                 minutes += 1
         
-        return max(minutes, 0) if fresh_oranges == 0 else -1
+        return minutes if fresh_oranges == 0 else -1
