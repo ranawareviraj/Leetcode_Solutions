@@ -12,9 +12,11 @@ class Solution:
                     continue
                 elif abs(asteroid) == abs(stack[-1]):
                     stack.pop()
-                    
-                is_current_destroyed = True
-                break
+                    is_current_destroyed = True
+                    break
+                else:
+                    is_current_destroyed = True
+                    break
 
             if not is_current_destroyed:
                 stack.append(asteroid)
