@@ -10,9 +10,12 @@ class Solution:
 
             while map and len(map) < (right - left + 1):
                 min_cards = min(min_cards, right - left + 1)
-                map[cards[left]] -= 1
-                if map[cards[left]] == 0:
-                    map.pop(cards[left])
+                
+                left_card = cards[left]
+                map[left_card] -= 1
+                if map[left_card] == 0:
+                    map.pop(left_card)
+                
                 left += 1
         
         return min_cards if min_cards != math.inf else -1
