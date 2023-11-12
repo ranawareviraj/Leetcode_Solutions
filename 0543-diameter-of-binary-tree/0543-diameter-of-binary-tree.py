@@ -21,5 +21,5 @@ class Solution:
 
             return diameter, depth
 
-        diameter, _ = longest_path(root)
-        return diameter
+        # diameter, _ = longest_path(root)
+        return longest_path(root)[0]
