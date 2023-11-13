@@ -4,6 +4,7 @@
 #         self.val = val
 #         self.left = left
 #         self.right = right
+
 from collections import *
 
 class Solution:
@@ -14,7 +15,7 @@ class Solution:
             if not node:
                 return
             
-            if not start_node and node.val == start:
+            if node.val == start:
                 start_node = node
 
             if node and parent:
