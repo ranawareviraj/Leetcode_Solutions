@@ -1,15 +1,20 @@
 class Solution:
     def wordBreak(self, s: str, wordDict: List[str]) -> bool:
-        n = len(s)
-        dp = [ False ] * (n + 1)
-        dp[0] = True
-
-        for i in range(n + 1):
-            if dp[i] == True:
-                for word in wordDict:
-                    m = len(word)
-                    new_target = s[i : i + m]
-                    if new_target.startswith(word):
-                        dp[i + m] = True
+        def dp(target, word_dict, memo = {}):
+            if target in memo:
+                return memo[target]
+            
+            if target == '':
+                return True
+            
+            for word in word_dict:
+                if target.startswith(word):
+                    remaining = target[len(word) : ]
+                    if dp(remaining, word_dict, memo):
+                        memo[target] = True
+                        return memo[target]
+            
+            memo[target] = False
+            return False
         
-        return dp[n]
+        return dp(s, wordDict)
