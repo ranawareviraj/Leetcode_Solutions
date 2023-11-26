@@ -1,11 +1,14 @@
 class Solution:
     def minCostClimbingStairs(self, cost: List[int]) -> int:
-        prev_one = 0
-        prev_two = 0
         n = len(cost)
-
+        
+        # DP table
+        dp = [math.inf] * (n + 1)
+        
+        # Base cases
+        dp[0] = dp[1] = 0
+        
         for i in range(2, n + 1):
-            ans = min(cost[i - 1]+ prev_one, cost[i - 2] + prev_two)
-            prev_two, prev_one = prev_one, ans
-
-        return ans
+            dp[i] = min(dp[i - 1] + cost[i - 1], dp[i - 2] + cost[i - 2])
+        
+        return dp[n]
