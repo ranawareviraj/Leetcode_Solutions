@@ -1,31 +1,35 @@
 class Solution:
     def findOrder(self, numCourses: int, prerequisites: List[List[int]]) -> List[int]:
-        def finish_order(course, pre_graph, course_status, current_order):
-            if course_status[course] == IN_PROGRESS:
-                return False
-            if course_status[course] == COMPLETED:
-                return True
+        # Build prerequisites graph and counter of number of prerequisites
+        graph = defaultdict(list)
+        no_of_prerequisites = [0] * numCourses
+        for course, prerequisite in prerequisites:
+            graph[prerequisite].append(course)
+            no_of_prerequisites[course] += 1
+        
+        # BFS Queue
+        queue = deque([]) 
 
-            course_status[course] = IN_PROGRESS
-            
-            for pre_course in pre_graph[course]:
-                if not finish_order(pre_course, pre_graph, course_status, current_order):
-                    return False
-                
-            current_order.append(course)
-            course_status[course] = COMPLETED
-            return True
+        # Add all level 0 onto queue -
+        # i.e all courses without pre-requisites
+        for course, prerequisite_count in enumerate(no_of_prerequisites):
+            if prerequisite_count == 0:
+                queue.append(course)
+        
+        # List to track course order
+        course_order = []
+        while queue:
+            # Process all courses without pre-requisites
+            level = len(queue)
+            for _ in range(level):
+                course = queue.popleft()
+                course_order.append(course)
 
-        pre_graph = defaultdict(list)
-        for course, pre in prerequisites:
-            pre_graph[pre].append(course)
+                for next_course in graph[course]:
+                    no_of_prerequisites[next_course] -= 1
+                    # Add all next_courses whos prerequisites are completed
+                    if no_of_prerequisites[next_course] == 0:
+                        queue.append(next_course)
 
-        NOT_STARTED, IN_PROGRESS, COMPLETED = 0, 1, 2
-        course_status = [NOT_STARTED] * numCourses
-
-        order = []
-        for course in range(numCourses):
-            if not finish_order(course, pre_graph, course_status, order):
-                return []
-
-        return reversed(order)
+        # If it is impossible to finish all courses, return an empty array. 
+        return course_order if len(course_order) == numCourses else []
