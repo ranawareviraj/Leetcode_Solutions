@@ -1,16 +1,15 @@
 class Solution:
     def findMatrix(self, nums: List[int]) -> List[List[int]]:
-        counter = Counter(nums)
-        print(counter)
-        result = []
-        while len(counter) > 0:
-            row = []
-            for key in list(counter.keys()):
-                row.append(key)
-                counter[key] -= 1
-                if counter[key] == 0:
-                    del counter[key]
-            print(counter)
-            result.append(row)
-        
-        return result
+        n = len(nums)
+        freq = [0] * (n + 1)
+        ans = []
+
+        for num in nums:
+            if freq[num] >= len(ans):
+                ans.append([])
+
+            # Store the integer in the list corresponding to its current frequency.
+            ans[freq[num]].append(num)
+            freq[num] += 1
+
+        return ans
