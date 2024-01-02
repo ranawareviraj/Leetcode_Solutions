@@ -1,7 +1,7 @@
 class Solution:
     def findMatrix(self, nums: List[int]) -> List[List[int]]:
         n = len(nums)
-        freq = [0] * (n + 1)
+        freq = defaultdict(int)
         ans = []
 
         for num in nums:
