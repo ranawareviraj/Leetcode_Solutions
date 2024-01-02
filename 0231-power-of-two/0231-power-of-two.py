@@ -4,5 +4,4 @@ class Solution:
         if n == 1: return True
         if n % 2 != 0: return False
 
-        x = n // 2
-        return self.isPowerOfTwo(x)
+        return self.isPowerOfTwo(n // 2)
