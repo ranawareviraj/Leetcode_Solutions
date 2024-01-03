@@ -1,14 +1,15 @@
 class Solution:
     def numberOfBeams(self, bank: List[str]) -> int:
-        total = prev_row_count = curr_row_count = 0
+        total = prev = 0
 
         for i, row in enumerate(bank):
+            curr = 0
             for cell in row:
-                curr_row_count += int(cell)
+                if cell == '1':
+                    curr += 1
             
-            if curr_row_count > 0:
-                total += prev_row_count * curr_row_count
-                prev_row_count = curr_row_count
-                curr_row_count = 0
+            if curr > 0:
+                total += prev * curr
+                prev = curr
         
         return total
