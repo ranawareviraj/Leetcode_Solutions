@@ -3,15 +3,12 @@ class Solution:
         stack = []
 
         for ch in s:
-            if stack:
-                if stack[-1][0] == ch:
-                    ch, freq = stack.pop()
-                    if freq < k - 1:
-                        stack.append((ch, freq + 1))
-                else:
-                    stack.append((ch, 1))
-            else:
+            if not stack or stack[-1][0] != ch:
                 stack.append((ch, 1))
+            else:
+                ch, freq = stack.pop()
+                if freq < k - 1:
+                    stack.append((ch, freq + 1))
 
         result = []
         for ch, n in stack:
