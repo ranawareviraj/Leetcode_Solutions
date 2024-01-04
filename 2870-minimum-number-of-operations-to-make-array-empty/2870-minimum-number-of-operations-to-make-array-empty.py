@@ -7,6 +7,6 @@ class Solution:
             freq = counter[key]
             if freq == 1: 
                 return -1
-            ans += ceil(freq / 3)
+            ans += freq // 3 + int(freq % 3 != 0)
         
         return ans
