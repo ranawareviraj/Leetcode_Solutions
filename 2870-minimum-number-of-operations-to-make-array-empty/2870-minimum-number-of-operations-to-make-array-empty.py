@@ -3,9 +3,10 @@ class Solution:
         counter = Counter(nums)
         ans = 0
         
-        for c in counter.values():
-            if c == 1: 
+        for key in counter:
+            freq = counter[key]
+            if freq == 1: 
                 return -1
-            ans += ceil(c / 3)
+            ans += ceil(freq / 3)
         
         return ans
