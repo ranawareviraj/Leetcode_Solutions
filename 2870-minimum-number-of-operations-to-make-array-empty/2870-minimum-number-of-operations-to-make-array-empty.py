@@ -3,8 +3,7 @@ class Solution:
         counter = Counter(nums)
         ans = 0
         
-        for key in counter:
-            freq = counter[key]
+        for freq in counter.values():
             if freq == 1: 
                 return -1
             ans += freq // 3 + int(freq % 3 != 0)
