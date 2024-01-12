@@ -15,29 +15,19 @@
  */
  
  class Solution {
+    private int totalTilt = 0;
+    
     public int findTilt(TreeNode root) {
-        return dfs(root).tilt;
+        dfs(root);
+        return this.totalTilt;
     }
 
-    private static Result dfs(TreeNode node) {
-        if (node == null) return new Result(0, 0);
+    private int dfs(TreeNode node){
+        if (node == null) return 0;
 
-        Result leftResult = dfs(node.left);
-        Result rightResult = dfs(node.right);
-
-        int tilt = Math.abs(leftResult.sum - rightResult.sum) + leftResult.tilt + rightResult.tilt;
-        int sum = node.val + leftResult.sum + rightResult.sum;
-
-        return new Result(sum, tilt);
-    }
-
-    private static class Result {
-        int sum;
-        int tilt;
-
-        Result(int sum, int tilt) {
-            this.sum = sum;
-            this.tilt = tilt;
-        }
+        int leftSum = dfs(node.left);
+        int rightSum = dfs(node.right);
+        this.totalTilt += Math.abs(leftSum - rightSum);
+        return node.val + leftSum + rightSum;
     }
 }
