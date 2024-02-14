@@ -15,16 +15,14 @@
  */
 class Solution {
     public List<Integer> postorderTraversal(TreeNode root) {
-        List<Integer> result = new ArrayList<>();
-        dfs(root, result);
-        return result;
-    }
-
-    private static void dfs(TreeNode node, List<Integer> result){
-        if(node != null){
-            dfs(node.left, result);
-            dfs(node.right, result);
-            result.add(node.val);
+        if(root == null){
+            return new ArrayList<>();
         }
+
+        List<Integer> result = new ArrayList<>();
+        result.addAll(postorderTraversal(root.left));
+        result.addAll(postorderTraversal(root.right));
+        result.add(root.val);
+        return result;
     }
 }
