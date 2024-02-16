@@ -1,8 +1,9 @@
 /**
  * @return {Function}
  */
-let createHelloWorld = () => {
-    return () => "Hello World";
+let createHelloWorld = function() {
+    f = () => "Hello World";
+    return f;
 };
 
 /**
