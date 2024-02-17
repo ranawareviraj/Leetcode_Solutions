@@ -2,24 +2,27 @@
  * @param {string} val
  * @return {Object}
  */
-var expect = function(val) {
-    return {
-        toBe: (anotherVal) =>{
-            if (val === anotherVal){
-                return true;
-            }
-
+class Expect {
+    constructor(val) {
+        this.val = val;
+    }
+    
+    toBe(val2) {
+        if (this.val !== val2) {
             throw new Error("Not Equal");
-        },
-        notToBe: (anotherVal) =>{
-            if (val !== anotherVal){
-                return true;
-            }
-
+        }
+        return true;
+    }
+    
+    notToBe(val2) {
+        if (this.val === val2) {
             throw new Error("Equal");
         }
+        return true;
     }
-};
+}
+
+var expect = (val) => new Expect(val);
 
 /**
  * expect(5).toBe(5); // true
