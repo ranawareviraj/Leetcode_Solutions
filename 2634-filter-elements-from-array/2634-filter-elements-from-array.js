@@ -3,12 +3,12 @@
  * @param {Function} fn
  * @return {number[]}
  */
-var filter = function(arr, fn) {
-    filteredArr = new Array(arr.length);
+var filter = function (arr, fn) {
+    filteredArr = [];
 
-    for(const index in arr){
-        if(fn(arr[index], Number(index))){
-            filteredArr[index] = arr[index];
+    for (const index in arr) {
+        if (fn(arr[index], Number(index))) {
+            filteredArr.push(arr[index]);
         }
     }
 
