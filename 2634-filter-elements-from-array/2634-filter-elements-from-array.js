@@ -4,11 +4,11 @@
  * @return {number[]}
  */
 var filter = function(arr, fn) {
-    filteredArr = []
+    filteredArr = new Array(arr.length);
 
-    for(let i = 0; i < arr.length; i++){
-        if(fn(arr[i], i)){
-            filteredArr.push(arr[i]);
+    for(const index in arr){
+        if(fn(arr[index], Number(index))){
+            filteredArr[index] = arr[index];
         }
     }
 
