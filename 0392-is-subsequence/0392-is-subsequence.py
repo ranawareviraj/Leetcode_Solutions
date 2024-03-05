@@ -1,10 +1,16 @@
 class Solution:
     def isSubsequence(self, s: str, t: str) -> bool:
-        p1 = p2 = 0
+        S_BOUND, T_BOUND = len(s), len(t)
+        def is_subsequence(s_index, t_index):
+            if s_index == S_BOUND:
+                return True
+            if t_index == T_BOUND:
+                return False
+            
+            if s[s_index] == t[t_index]:
+                s_index += 1
+            t_index += 1
+
+            return is_subsequence(s_index, t_index)
         
-        while p1 < len(s) and p2 < len(t):
-            if s[p1] == t[p2]:
-                p1 += 1
-            p2 += 1
-        
-        return p1 == len(s)
+        return is_subsequence(0, 0)
