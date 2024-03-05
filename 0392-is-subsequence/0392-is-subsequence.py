@@ -1,6 +1,7 @@
 class Solution:
     def isSubsequence(self, s: str, t: str) -> bool:
         S_BOUND, T_BOUND = len(s), len(t)
+        
         def is_subsequence(s_index, t_index):
             if s_index == S_BOUND:
                 return True
