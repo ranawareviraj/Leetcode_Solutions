@@ -1,17 +1,23 @@
+from collections import defaultdict
+
 class Solution:
     def isSubsequence(self, s: str, t: str) -> bool:
-        S_BOUND, T_BOUND = len(s), len(t)
+        letter_to_indices = defaultdict(list)
+
+        for index, ch in enumerate(t):
+            letter_to_indices[ch].append(index)
         
-        def is_subsequence(s_index, t_index):
-            if s_index == S_BOUND:
-                return True
-            if t_index == T_BOUND:
+        curr_match_index = -1
+        for ch in s:
+            if ch not in letter_to_indices:
+                return False
+
+            indices_list = letter_to_indices[ch]
+            match_index = bisect.bisect_right(indices_list, curr_match_index)
+            if match_index != len(indices_list):
+                curr_match_index = indices_list[match_index]
+            else:
                 return False
             
-            if s[s_index] == t[t_index]:
-                s_index += 1
-            t_index += 1
+        return True
 
-            return is_subsequence(s_index, t_index)
-        
-        return is_subsequence(0, 0)
