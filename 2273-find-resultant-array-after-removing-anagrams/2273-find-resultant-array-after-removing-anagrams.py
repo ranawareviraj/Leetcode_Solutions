@@ -6,9 +6,9 @@ class Solution:
             return Counter(word1) == Counter(word2)
 
         stack = [words[0]]
-        for i in range(1, len(words)):
-            if not is_anagram(words[i], stack[-1]):
-                stack.append(words[i])
+        for i, word in enumerate(words, 1):
+            if not is_anagram(word, stack[-1]):
+                stack.append(word)
 
         return stack
         
