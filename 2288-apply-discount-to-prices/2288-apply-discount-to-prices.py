@@ -1,13 +1,13 @@
 class Solution:
     def discountPrices(self, sentence: str, discount: int) -> str:
         tokens = sentence.split()
-        m = discount / 100
+        discount /= 100
 
         for i, token in enumerate(tokens):
             # Check if it's in correct format
             price = token[1:]
             if token[0] == "$" and price.isdigit():
-                discounted_price = int(price) * (1 - m)
+                discounted_price = int(price) * (1 - discount)
                 formatted_price = "$" + "{:.2f}".format(discounted_price)
 
                 tokens[i] = formatted_price
