@@ -1,11 +1,11 @@
 /**
  * @return {Function}
  */
-let createHelloWorld = function() {
-    f = function() {
+var createHelloWorld = function () {
+
+    return function (...args) {
         return "Hello World";
     }
-    return f;
 };
 
 /**
