@@ -1,19 +1,24 @@
 class Solution:
     def longestPalindrome(self, s: str) -> str:
-        def find_longest_palindrome(s, left, right, longest_palindrome):
-            while (left >= 0 and right < n) and s[left] == s[right]:
-                if (right - left + 1) > len(longest_palindrome):
-                    longest_palindrome = s[left : right + 1]
-                left -= 1
-                right += 1
-            return longest_palindrome
+        def is_palindrome(sub_str):
+            left = 0
+            right = len(sub_str) - 1
+
+            while left < right:
+                if sub_str[left] != sub_str[right]:
+                    return False
+                left += 1
+                right -= 1
+            
+            return True
 
         n = len(s)
-        ans = ""
-
-        for i in range(n):
-            ans = find_longest_palindrome(s, i, i, ans)
-            ans = find_longest_palindrome(s, i, i + 1, ans)
+        max_length = 0
+        max_str = ""
+        for start in range(n):
+            for end in range(start, n):
+                sub_str = s[start : end + 1]
+                if len(sub_str) > max_length and is_palindrome(sub_str):
+                    max_length, max_str = max(0, end - start + 1), sub_str
         
-        return ans
-
+        return max_str
